@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AXRIVE — Electric Drive Development</title>
+<meta name="description" content="AXRIVE — Electric drive development: motor control, power electronics and drive system engineering.">
+<style>
+  :root{
+    --green:#00A19C;
+    --green-dark:#00807C;
+    --green-light:#E6F6F5;
+    --ink:#0F1A1A;
+    --muted:#5A6B6B;
+    --bg:#FFFFFF;
+    --line:#E3ECEC;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);background:var(--bg);line-height:1.6;
+  }
+  a{color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  /* Under construction banner */
+  .construction{
+    background:var(--ink);color:#fff;text-align:center;font-size:.9rem;
+    padding:10px 16px;letter-spacing:.02em;
+  }
+  .construction .dot{
+    display:inline-block;width:8px;height:8px;border-radius:50%;background:#19C2BC;
+    margin-right:8px;vertical-align:middle;animation:pulse 1.6s infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+  .badge{
+    display:inline-block;margin-top:28px;margin-left:12px;padding:12px 22px;border-radius:999px;
+    border:1px solid rgba(255,255,255,.6);color:#fff;font-size:.9rem;font-weight:600;vertical-align:top;
+  }
+
+  /* Header */
+  header{
+    position:sticky;top:0;z-index:10;background:rgba(255,255,255,.92);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{font-weight:800;letter-spacing:.18em;font-size:1.1rem;text-decoration:none}
+  .logo span{color:var(--green)}
+  nav a{margin-left:28px;text-decoration:none;color:var(--muted);font-size:.95rem}
+  nav a:hover{color:var(--green)}
+
+  /* Hero */
+  .hero{
+    position:relative;overflow:hidden;
+    background:linear-gradient(135deg,var(--green-dark) 0%,var(--green) 60%,#19C2BC 100%);
+    color:#fff;padding:120px 0 110px;
+  }
+  .hero::after{
+    content:"";position:absolute;right:-120px;top:-120px;width:520px;height:520px;border-radius:50%;
+    border:2px solid rgba(255,255,255,.18);
+    box-shadow:0 0 0 60px rgba(255,255,255,.05),0 0 0 120px rgba(255,255,255,.04);
+  }
+  .eyebrow{text-transform:uppercase;letter-spacing:.2em;font-size:.8rem;opacity:.85;margin-bottom:18px}
+  .hero h1{font-size:clamp(2.4rem,6vw,4.2rem);line-height:1.08;font-weight:800;max-width:780px}
+  .hero p{margin-top:22px;font-size:1.15rem;max-width:600px;opacity:.92}
+  .btn{
+    display:inline-block;margin-top:36px;padding:14px 28px;border-radius:999px;
+    background:#fff;color:var(--green-dark);font-weight:700;text-decoration:none;
+    transition:transform .15s ease;
+  }
+  .btn:hover{transform:translateY(-2px)}
+
+  /* Sections */
+  section{padding:96px 0}
+  .label{color:var(--green);font-weight:700;text-transform:uppercase;letter-spacing:.16em;font-size:.8rem}
+  h2{font-size:clamp(1.8rem,3.5vw,2.4rem);margin:10px 0 20px;line-height:1.2}
+  .lead{color:var(--muted);font-size:1.08rem;max-width:720px}
+
+  .about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:56px;align-items:start}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .stat{background:var(--green-light);border-radius:16px;padding:24px}
+  .stat b{display:block;font-size:1.6rem;color:var(--green-dark)}
+  .stat small{color:var(--muted)}
+
+  .focus{background:#F7FAFA;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;margin-top:40px}
+  .card{
+    background:#fff;border:1px solid var(--line);border-radius:16px;padding:28px;
+    transition:border-color .2s,box-shadow .2s;
+  }
+  .card:hover{border-color:var(--green);box-shadow:0 10px 30px rgba(0,161,156,.10)}
+  .icon{
+    width:44px;height:44px;border-radius:12px;background:var(--green-light);
+    display:grid;place-items:center;margin-bottom:18px;
+  }
+  .icon svg{width:22px;height:22px;stroke:var(--green-dark);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .card h3{font-size:1.08rem;margin-bottom:8px}
+  .card p{color:var(--muted);font-size:.95rem}
+
+  /* Contact */
+  .contact{text-align:center}
+  .contact .lead{margin:0 auto}
+  .mail{
+    display:inline-block;margin-top:28px;font-size:1.3rem;font-weight:700;color:var(--green-dark);
+    text-decoration:none;border-bottom:2px solid var(--green);padding-bottom:4px;
+  }
+
+  footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:.88rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+
+  @media (max-width:760px){
+    nav a{margin-left:16px}
+    .about-grid{grid-template-columns:1fr;gap:36px}
+    .hero{padding:90px 0 80px}
+    section{padding:72px 0}
+  }
+</style>
+</head>
+<body>
+
+<div class="construction">
+  <span class="dot"></span> Website under construction — full content coming soon.
+</div>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="logo">AX<span>RIVE</span></a>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#focus">Focus</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Electric Drive Development</div>
+    <h1>Engineering the motion behind electric mobility.</h1>
+    <p>AXRIVE develops electric drive systems — from motor control and power electronics to complete, validated drivetrains.</p>
+    <a href="#contact" class="btn">Get in touch</a>
+    <span class="badge">🚧 Under construction</span>
+  </div>
+</div>
+
+<section id="about">
+  <div class="wrap about-grid">
+    <div>
+      <div class="label">About</div>
+      <h2>Precision, efficiency and reliability in every drive.</h2>
+      <p class="lead">
+        AXRIVE focuses on the development of electric drive systems for automotive and industrial applications.
+        The work spans the full development cycle — concept, design, software, testing and validation —
+        with the goal of delivering drives that are efficient, robust and ready for production.
+      </p>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>Motor</b><small>Control &amp; design</small></div>
+      <div class="stat"><b>Inverter</b><small>Power electronics</small></div>
+      <div class="stat"><b>System</b><small>Integration</small></div>
+      <div class="stat"><b>Test</b><small>Validation</small></div>
+    </div>
+  </div>
+</section>
+
+<section id="focus" class="focus">
+  <div class="wrap">
+    <div class="label">Focus areas</div>
+    <h2>What I work on</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <h3>Motor Control</h3>
+        <p>Field-oriented control, sensorless algorithms and torque control for PMSM and induction machines.</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></div>
+        <h3>Power Electronics</h3>
+        <p>Inverter and converter design with a focus on efficiency, thermal performance and EMC.</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div>
+        <h3>Embedded Software</h3>
+        <p>Real-time drive software, calibration and diagnostics following automotive development practice.</p>
+      </div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg></div>
+        <h3>Testing &amp; Validation</h3>
+        <p>Test bench measurements, HIL testing and verification of the drive system against requirements.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="wrap">
+    <div class="label">Contact</div>
+    <h2>Let's talk electric drives.</h2>
+    <p class="lead">Interested in collaboration or have a question? Feel free to reach out.</p>
+    <a class="mail" href="mailto:info@axrive.co">info@axrive.co</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="y"></span> AXRIVE</span>
+    <span>Electric Drive Development</span>
+  </div>
+</footer>
+
+<script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+</body>
+</html>
